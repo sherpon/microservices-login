@@ -13,10 +13,11 @@ const getEnv = () => {
     process.env.SHERPON_ENV = ENV.SHERPON_ENV;
     process.env.FIREBASE_SERVICE_ACCOUNT = ENV.FIREBASE_SERVICE_ACCOUNT;
     process.env.MICROSERVICES_ENDPOINT = ENV.MICROSERVICES_ENDPOINT;
-    process.env.MYSQL_DB_HOST = ENV.MYSQL_DB_HOST;
-    process.env.MYSQL_DB_PORT = ENV.MYSQL_DB_PORT;
-    process.env.MYSQL_DB_USER = ENV.MYSQL_DB_USER;
-    process.env.MYSQL_DB_PASSWORD = ENV.MYSQL_DB_PASSWORD;
+    process.env.MYSQL_HOST = ENV.MYSQL_HOST;
+    process.env.MYSQL_PORT = ENV.MYSQL_PORT;
+    process.env.MYSQL_USER = ENV.MYSQL_USER;
+    process.env.MYSQL_PASSWORD = ENV.MYSQL_PASSWORD;
+    process.env.MYSQL_DATABASE = ENV.MYSQL_DATABASE;
   }
 }
 
