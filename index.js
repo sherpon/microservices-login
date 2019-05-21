@@ -1,7 +1,8 @@
 //"use strict";
 
-const getToken = require('./tools/getToken');
 const getEnv = require('./tools/getEnv');
+const getToken = require('./tools/getToken');
+const getUserByToken = require('./tools/getUserByToken');
 
 /**
  * HTTP Cloud Function.
@@ -16,12 +17,24 @@ const getEnv = require('./tools/getEnv');
 exports.login = (req, res) => {
   // Get env variables
   const ENV = getEnv();
-  
+
   // Set CORS headers for preflight requests
   // Allows GETs from any origin with the Content-Type header
   res.set('Access-Control-Allow-Origin', '*');
   
   const myAuthentication = getToken(req.headers);
+  if (myAuthentication===false) {
+    // didn't find any token
+    res.status(401).end();  // send no content
+  }
+
+  const myToken = myAuthentication.token;
+  getUserByToken(myToken)
+  .then(uid => {})
+  .catch(error => {
+    // didn't find any user
+    res.status(401).end();  // send no content
+  });
 
   /*
   const myToken = `My token is ...${myAuthentication.token}`;

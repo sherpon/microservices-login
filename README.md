@@ -43,6 +43,7 @@ functions deploy login \
 ### Staging
 Create a file ``/env/.env.yaml`` and replace the values with your staging information.
 ```yaml
+SHERPON_ENV: STAGING
 MICROSERVICES_ENDPOINT:  http://localhost:8010/sherpon-staging/us-central1/
 MYSQL_DB_HOST: localhost
 MYSQL_DB_PORT: 8889
