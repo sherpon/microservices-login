@@ -12,7 +12,16 @@
 # below:
 .git
 .gitignore
+
+# env files
+env/
 .env
 .env.yaml
 .env.staging.yaml
+.env.production.yaml
+.env.json
+
+# test
+coverage/
+
 node_modules

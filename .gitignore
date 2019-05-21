@@ -10,6 +10,14 @@ dist
 # misc
 .DS_Store
 npm-debug.log
+
+# env files
+env/
 .env
 .env.yaml
 .env.staging.yaml
+.env.production.yaml
+.env.json
+
+# test
+coverage

@@ -1,6 +1,7 @@
-"use strict";
+//"use strict";
 
-import getToken from './tools/getToken';
+const getToken = require('./tools/getToken');
+const getEnv = require('./tools/getEnv');
 
 /**
  * HTTP Cloud Function.
@@ -13,15 +14,19 @@ import getToken from './tools/getToken';
  *                     More info: https://expressjs.com/en/api.html#res
  */
 exports.login = (req, res) => {
+  // Get env variables
+  const ENV = getEnv();
+  
   // Set CORS headers for preflight requests
   // Allows GETs from any origin with the Content-Type header
   res.set('Access-Control-Allow-Origin', '*');
   
   const myAuthentication = getToken(req.headers);
 
+  /*
   const myToken = `My token is ...${myAuthentication.token}`;
   const myMessage = `I am ${req.body.name} and my id is ${req.body.id}`;
-  const myEnv = `My DB_HOST env is...${process.env.DB_HOST}`
+  const myEnv = `My ENV.MYSQL_DB_HOST env is...${ENV.MYSQL_DB_HOST}`
 
   res.status(202).send({
     "Code": "holi",
@@ -29,4 +34,5 @@ exports.login = (req, res) => {
     "token": myToken,
     "env": myEnv
   });
+  */
 };

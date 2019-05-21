@@ -7,7 +7,7 @@
  * @returns {Boolean|Object} - If doesn't find authentication returns false. 
  *                     Otherwise, return a Object with the token
  */
-const getToken = (headers) => {
+function getToken(headers) {
   if (!headers || !headers.authorization) {
     // 'No authorization token found.
     return false;
@@ -25,4 +25,4 @@ const getToken = (headers) => {
   return { scheme, token };
 }
 
-export default getToken;
+module.exports = getToken;
