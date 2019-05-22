@@ -1,27 +1,32 @@
 const getEnv = require('./getEnv');
 
-jest.mock('fs');
+jest.mock('firebase-admin');
 
 const getUserbyToken = require('./getUserByToken');
 
 describe('Test getUserbyToken', () => {
-  const validToken = '1qaz2wsx3edc4rfv5tgb';
+  const firebaseUser = {
+    token: '1qaz2wsx3edc4rfv5tgb',
+    uid: 'zxcvbnmlkjhgfdsa'
+  };
 
   beforeEach(() => {
     getEnv();
+    require('firebase-admin').__setMockUser(firebaseUser);
   });
 
   test('It should get the user.', async () => {
+    
     expect.assertions(2);
     expect(process.env.SHERPON_ENV).toBe('DEVELOPMENT');
-    await expect(getUserbyToken(validToken)).resolves.toEqual('1qw23er45ty67ui8');
+    await expect(getUserbyToken(firebaseUser.token)).resolves.toEqual(firebaseUser.uid);
   });
 
   test('It should get the user. Production env', async () => {
     delete process.env.SHERPON_ENV;
     expect.assertions(2);
     expect(process.env.SHERPON_ENV).toBe(undefined);
-    await expect(getUserbyToken(validToken)).resolves.toEqual('1qw23er45ty67ui8');
+    await expect(getUserbyToken(firebaseUser.token)).resolves.toEqual(firebaseUser.uid);
   });
 
   test('It shouldn\'t get the user.', async () => {

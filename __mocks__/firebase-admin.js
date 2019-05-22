@@ -1,32 +1,46 @@
-const auth = {
-  verifyIdToken: (token) => {
-    return new Promise((resolve, reject) => {
-      if (token===undefined) {
-        reject('error: token is undefined');
-      }
+/**
+ * https://jestjs.io/docs/en/manual-mocks
+ */
 
-      if (token==='') {
-        reject('error: token is empty');
-      }
+const firebaseAdmin = jest.genMockFromModule('firebase-admin');
 
-      if (token==='1qaz2wsx3edc4rfv5tgb') {
-        const decodedToken = {
-          uid: '1qw23er45ty67ui8'
-        };
-        resolve(decodedToken)
-      } else {
-        reject('error: the token doesn\'t exist.');
-      }
-    });
-  }
+let __mockFirebaseAuthenticationUser = {
+  token: '',
+  uid: '',
 };
 
-const firebaseAdmin = {
-  initializeApp: (credentianObject) => {},
-  credential: {
-    cert: () => {}
-  },
-  auth: () => auth
+const __setMockUser = (user) => {
+  __mockFirebaseAuthenticationUser = user;
 };
+
+firebaseAdmin.__setMockUser = __setMockUser; 
+
+let auth = {};
+auth.verifyIdToken = (token) => {
+  return new Promise((resolve, reject) => {
+    if (token===undefined) {
+      reject('error: token is undefined');
+    }
+
+    if (token==='') {
+      reject('error: token is empty');
+    }
+
+    if (token===__mockFirebaseAuthenticationUser.token) {
+      const decodedToken = {
+        uid: __mockFirebaseAuthenticationUser.uid
+      };
+      resolve(decodedToken)
+    } else {
+      reject('error: the token doesn\'t exist.');
+    }
+  });
+};
+
+firebaseAdmin.initializeApp = (credentianObject) => {};
+firebaseAdmin.credential = {
+  cert: () => {}
+};
+firebaseAdmin.auth = () => auth;
 
 module.exports = firebaseAdmin;
