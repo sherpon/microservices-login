@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1558476003372" clover="3.2.0">
-  <project timestamp="1558476003372" name="All files">
-    <metrics statements="43" coveredstatements="43" conditionals="14" coveredconditionals="14" methods="9" coveredmethods="9" elements="66" coveredelements="66" complexity="0" loc="43" ncloc="43" packages="2" files="4" classes="4"/>
+<coverage generated="1558487086988" clover="3.2.0">
+  <project timestamp="1558487086988" name="All files">
+    <metrics statements="52" coveredstatements="52" conditionals="16" coveredconditionals="16" methods="12" coveredmethods="12" elements="80" coveredelements="80" complexity="0" loc="52" ncloc="52" packages="2" files="5" classes="5"/>
     <package name="mysql">
-      <metrics statements="11" coveredstatements="11" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
+      <metrics statements="20" coveredstatements="20" conditionals="6" coveredconditionals="6" methods="6" coveredmethods="6"/>
       <file name="getUser.js" path="/Users/brucegroverlee/Roles/Developer/Sherpon/microservices/login/mysql/getUser.js">
         <metrics statements="11" coveredstatements="11" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
         <line num="8" count="1" type="stmt"/>
@@ -17,6 +17,18 @@
         <line num="25" count="1" type="stmt"/>
         <line num="26" count="1" type="stmt"/>
         <line num="37" count="1" type="stmt"/>
+      </file>
+      <file name="saveUser.js" path="/Users/brucegroverlee/Roles/Developer/Sherpon/microservices/login/mysql/saveUser.js">
+        <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="18" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="23" count="2" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
       </file>
     </package>
     <package name="tools">
