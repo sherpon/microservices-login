@@ -3,7 +3,7 @@
  * 
  * @param {Object} connection - MySQL connection object.
  * @param {String} uid - User uid
- * @returns {Promise} -  
+ * @returns {Promise} -  User object.
  */
 const getUser = (connection, uid) => {
   return new Promise((resolve, reject) => {

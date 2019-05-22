@@ -4,6 +4,9 @@ const getEnv = require('./tools/getEnv');
 const getToken = require('./tools/getToken');
 const getUserByToken = require('./tools/getUserByToken');
 const getConnection = require('./mysql/getConnection');
+const getUser = require('./mysql/getUser');
+const saveUser = require('./mysql/saveUser');
+const getPermissions = require('./mysql/getPermissions');
 
 /**
  * HTTP Cloud Function.
@@ -15,13 +18,16 @@ const getConnection = require('./mysql/getConnection');
  * @param {Object} res Cloud Function response context.
  *                     More info: https://expressjs.com/en/api.html#res
  */
-exports.login = (req, res) => {
+exports.login = async (req, res) => {
   // Get env variables
   getEnv();
 
   // Set CORS headers for preflight requests
   // Allows GETs from any origin with the Content-Type header
   res.set('Access-Control-Allow-Origin', '*');
+
+  // get user information
+  const user = req.body;
   
   const myAuthentication = getToken(req.headers);
   if (myAuthentication===false) {
@@ -30,46 +36,33 @@ exports.login = (req, res) => {
   }
 
   const myToken = myAuthentication.token;
-  getUserByToken(myToken)
-  .then(uid => {
+  try {
+    const uid = await getUserByToken(myToken);
+    if (user.id!==uid) {
+      // must be the same
+      res.status(401).end();  // send no content
+    }
     const connection = getConnection();
     connection.connect();
-    //getUser
-    if (/** user !== exist */) {
-      // saveUser
+    const dbUser = await getUser(connection, uid);
+    if (dbUser === false /** user doesn't exist */) {
+      await saveUser(connection, user.id, user.name, user.email, user.phone);
       connection.end();
-      // return 201 Created
+      res.status(201).end();  // return 201 Created
     } else {
-      /** user === exist */
-      // getPermissions
+      /** user exist */
+      const permissions = await getPermissions(connection, uid);
       connection.end();
-      // return 202 accepted
-      /**
-        {
-          "id": String,
-          "name": String,
-          "email": String,
-          "phone": String,
-          "websites": Object[]
-        }
-       */
+      const session = {
+        id: dbUser.id,
+        name: dbUser.name,
+        email: dbUser.email,
+        phone: dbUser.phone,
+        websites: permissions
+      };
+      res.status(202).send(session);  // return 202 accepted
     }
-  })
-  .catch(error => {
-    // didn't find any user
+  } catch (error) {
     res.status(401).end();  // send no content
-  });
-
-  /*
-  const myToken = `My token is ...${myAuthentication.token}`;
-  const myMessage = `I am ${req.body.name} and my id is ${req.body.id}`;
-  const myEnv = `My ENV.MYSQL_DB_HOST env is...${ENV.MYSQL_DB_HOST}`
-
-  res.status(202).send({
-    "Code": "holi",
-    "message": myMessage,
-    "token": myToken,
-    "env": myEnv
-  });
-  */
+  }
 };
