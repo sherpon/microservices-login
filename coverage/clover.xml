@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1558487086988" clover="3.2.0">
-  <project timestamp="1558487086988" name="All files">
-    <metrics statements="52" coveredstatements="52" conditionals="16" coveredconditionals="16" methods="12" coveredmethods="12" elements="80" coveredelements="80" complexity="0" loc="52" ncloc="52" packages="2" files="5" classes="5"/>
+<coverage generated="1558554597985" clover="3.2.0">
+  <project timestamp="1558554597985" name="All files">
+    <metrics statements="59" coveredstatements="59" conditionals="18" coveredconditionals="18" methods="15" coveredmethods="15" elements="92" coveredelements="92" complexity="0" loc="59" ncloc="59" packages="2" files="6" classes="6"/>
     <package name="mysql">
-      <metrics statements="20" coveredstatements="20" conditionals="6" coveredconditionals="6" methods="6" coveredmethods="6"/>
+      <metrics statements="27" coveredstatements="27" conditionals="8" coveredconditionals="8" methods="9" coveredmethods="9"/>
+      <file name="getPermissions.js" path="/Users/brucegroverlee/Roles/Developer/Sherpon/microservices/login/mysql/getPermissions.js">
+        <metrics statements="8" coveredstatements="8" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="19" count="3" type="stmt"/>
+        <line num="20" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="25" count="3" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+      </file>
       <file name="getUser.js" path="/Users/brucegroverlee/Roles/Developer/Sherpon/microservices/login/mysql/getUser.js">
         <metrics statements="11" coveredstatements="11" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
         <line num="8" count="1" type="stmt"/>
@@ -19,9 +30,8 @@
         <line num="37" count="1" type="stmt"/>
       </file>
       <file name="saveUser.js" path="/Users/brucegroverlee/Roles/Developer/Sherpon/microservices/login/mysql/saveUser.js">
-        <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="11" count="2" type="stmt"/>
+        <metrics statements="8" coveredstatements="8" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+        <line num="11" count="1" type="stmt"/>
         <line num="12" count="2" type="stmt"/>
         <line num="13" count="2" type="stmt"/>
         <line num="17" count="2" type="stmt"/>

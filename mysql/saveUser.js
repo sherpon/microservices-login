@@ -1,6 +1,7 @@
 
 /**
  * 
+ * @param {Object} connection - MySQL connection object.
  * @param {String} id 
  * @param {String} name 
  * @param {String} email 
@@ -9,10 +10,9 @@
  */
 const saveUser = (connection, id, name, email, phone) => {
   return new Promise((resolve, reject) => {
-    const today = new Date();
     const sql = `
     INSERT INTO Users
-    VALUES ('${id}','${name}','${email}','${phone}',${today})
+    VALUES ('${id}','${name}','${email}','${phone}')
     `;
     connection.query(sql, (error, results, fields) => {
       if (error) {
