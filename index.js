@@ -32,7 +32,8 @@ exports.login = async (req, res) => {
   const myAuthentication = getToken(req.headers);
   if (myAuthentication===false) {
     // didn't find any token
-    res.status(401).end();  // send no content
+    res.status(401);
+    res.end();  // send no content
   }
 
   const myToken = myAuthentication.token;
@@ -40,7 +41,8 @@ exports.login = async (req, res) => {
     const uid = await getUserByToken(myToken);
     if (user.id!==uid) {
       // must be the same
-      res.status(401).end();  // send no content
+      res.status(401);
+      res.end();  // send no content
     }
     const connection = getConnection();
     connection.connect();
@@ -48,7 +50,8 @@ exports.login = async (req, res) => {
     if (dbUser === false /** user doesn't exist */) {
       await saveUser(connection, user.id, user.name, user.email, user.phone);
       connection.end();
-      res.status(201).end();  // return 201 Created
+      res.status(201);
+      res.end();  // return 201 Created
     } else {
       /** user exist */
       const permissions = await getPermissions(connection, uid);
@@ -60,9 +63,12 @@ exports.login = async (req, res) => {
         phone: dbUser.phone,
         websites: permissions
       };
-      res.status(202).send(session);  // return 202 accepted
+      res.status(202);
+      res.send(session);  // return 202 accepted
     }
   } catch (error) {
-    res.status(401).end();  // send no content
+    console.log(error);
+    res.status(401);
+    res.end();  // send no content
   }
 };
