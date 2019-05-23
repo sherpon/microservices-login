@@ -5,20 +5,25 @@
 const mysql = jest.genMockFromModule('mysql');
 
 let __mockError = false;
-let __mockResults = [];
+let __mockResultsUsers = [];
+let __mockResultsPermissions = [];
 let __mockFields = [];
 
 const __setMockError = (newError) => {
   __mockError = newError;
 };
-const __setMockResults = (newResults) => {
-  __mockResults = newResults;
+const __setMockResultsUsers = (newResultsUsers) => {
+  __mockResultsUsers = newResultsUsers;
+};
+const __setMockResultsPermissions = (newResultsPermissions) => {
+  __mockResultsPermissions = newResultsPermissions;
 };
 const __setMockFields = (newFields) => {
   __mockFields = newFields;
 };
 mysql.__setMockError = __setMockError;
-mysql.__setMockResults = __setMockResults;
+mysql.__setMockResultsUsers = __setMockResultsUsers;
+mysql.__setMockResultsPermissions = __setMockResultsPermissions;
 mysql.__setMockFields = __setMockFields;
 
 const query = (sql, callback) => {
@@ -26,7 +31,15 @@ const query = (sql, callback) => {
     callback(__mockError, [] /** returns empty */, [] /** returns empty */);
     return;
   }
-  callback(false, __mockResults, __mockFields);
+  if (sql.search(/SELECT \* FROM Users/) !== -1) {
+    callback(false, __mockResultsUsers, __mockFields);
+    return;
+  }
+  if (sql.search(/SELECT Websites.\*, Permissions.type/) !== -1) {
+    callback(false, __mockResultsPermissions, __mockFields);
+    return;
+  }
+  callback(false, __mockResultsUsers, __mockFields);
 };
 
 const connection = {

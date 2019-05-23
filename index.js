@@ -34,6 +34,7 @@ exports.login = async (req, res) => {
     // didn't find any token
     res.status(401);
     res.end();  // send no content
+    return;
   }
 
   const myToken = myAuthentication.token;
@@ -43,6 +44,7 @@ exports.login = async (req, res) => {
       // must be the same
       res.status(401);
       res.end();  // send no content
+      return;
     }
     const connection = getConnection();
     connection.connect();
