@@ -7,12 +7,14 @@ const admin = require('firebase-admin');
  */
 const getUserByToken = (token) => {
   
-  if (process.env.SHERPON_ENV==='DEVELOPMENT') {
-    admin.initializeApp({
-      credential: admin.credential.cert(process.env.FIREBASE_SERVICE_ACCOUNT)
-    });
-  } else {
-    admin.initializeApp();
+  if (!admin.apps.length) {
+    if (process.env.SHERPON_ENV==='DEVELOPMENT') {
+      admin.initializeApp({
+        credential: admin.credential.cert(process.env.FIREBASE_SERVICE_ACCOUNT)
+      });
+    } else {
+      admin.initializeApp();
+    }
   }
 
   return new Promise((resolve, reject) => {

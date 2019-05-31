@@ -37,9 +37,24 @@ Deploying functions to the Node.js Emulator uses the same syntax as the gcloud c
 To deploy the HTTP function to the Node.js Emulator:
 ```
 functions deploy login \
-  --env-vars-file ./env/.env.yaml \
   --trigger-http
 ```
+
+### Debugger
+```
+functions deploy login \
+  --trigger-http \
+  --timeout=50000
+```
+
+```
+functions inspect login
+```
+
+```
+functions logs read
+```
+
 ### Staging
 Create a file ``/env/.env.yaml`` and replace the values with your staging information.
 ```yaml
