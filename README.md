@@ -1,9 +1,32 @@
-## Deploy
+# Login service
+
+## 1. Deploy
 
 ### Localhost
 Create a directory `env` in the same level of the root directory.
 
 Download the **serviceAccountKey** from Firebase dashboard and save it in the `./env` directory.
+
+Provide a Project ID as shown below before starting the Node.js Emulator: 
+```
+functions config set projectId YOUR_PROJECT_ID
+```
+
+Starting and stopping the Node.js Emulator
+Before you can deploy a function, you need to start the Node.js Emulator: (if you are using nvm, maybe you need to use `sudo` command)
+```
+functions start
+```
+
+You stop the Node.js Emulator by calling stop:
+```
+functions stop
+```
+
+If the Node.js Emulator fails to stop for any reason, you can use the kill command to forcibly terminate the underlying process:
+```
+functions kill
+```
 
 Create a file ``./env/.env.json`` and replace the values with your localhost information.
 ```json
@@ -20,25 +43,13 @@ Create a file ``./env/.env.json`` and replace the values with your localhost inf
 }
 ```
 
-Provide a Project ID as shown below before starting the Node.js Emulator: (if you are using nvm, maybe you need to use `sudo` command)
+You could get the **MICROSERVICES_ENDPOINT** with the next line:
 ```
-functions config set projectId YOUR_PROJECT_ID
+functions status
 ```
-
-Starting and stopping the Node.js Emulator
-Before you can deploy a function, you need to start the Node.js Emulator:
+You will get a table with the next row:
 ```
-functions start
-```
-
-You stop the Node.js Emulator by calling stop:
-```
-functions stop
-```
-
-If the Node.js Emulator fails to stop for any reason, you can use the kill command to forcibly terminate the underlying process:
-```
-functions kill
+HTTP Triggers    │ http://localhost:8010/sherpon-staging/us-central1/:function  
 ```
 
 Deploying functions to the Node.js Emulator uses the same syntax as the gcloud command-line tool.
@@ -49,6 +60,11 @@ functions deploy login \
 ```
 
 ### Staging
+Set the project to deploy: 
+```
+gcloud config set project [PROJECT]
+```
+
 Create a file ``/env/.env.staging.yaml`` and replace the values with your staging information.
 ```yaml
 SHERPON_ENV: STAGING
@@ -67,7 +83,32 @@ gcloud functions deploy login \
   --trigger-http
 ```
 
-## Debugger
+### Production
+Set the project to deploy: 
+```
+gcloud config set project [PROJECT]
+```
+
+Create a file ``/env/.env.production.yaml`` and replace the values with your production information.
+```yaml
+SHERPON_ENV: PRODUCTION
+MICROSERVICES_ENDPOINT: https://us-central1-sherpon-production.cloudfunctions.net/
+ACCESS_CONTROL_ALLOW_ORIGIN: https://admin.sherpon.com
+DB_HOST: localhost
+DB_PORT: 8889
+DB_USER: root
+DB_PASSWORD: root
+MYSQL_DATABASE: sherpon
+```
+
+```
+gcloud functions deploy login \
+  --env-vars-file ./env/.production.yaml \
+  --runtime nodejs8 \
+  --trigger-http
+```
+
+## 2. Debugger
 Run the Function Emulator like localhost deploy. Then execute the follow line.
 ```
 functions deploy login \
@@ -84,7 +125,7 @@ functions logs read
 ```
 
 
-## References
+## 3. References
 1. Using Environment Variables [https://cloud.google.com/functions/docs/env-var](https://cloud.google.com/functions/docs/env-var)
 2. Cloud Functions Node.js Emulator [https://cloud.google.com/functions/docs/emulator](https://cloud.google.com/functions/docs/emulator)
 3. Testing and CI/CD [https://cloud.google.com/functions/docs/bestpractices/testing](https://cloud.google.com/functions/docs/bestpractices/testing)
