@@ -19,12 +19,11 @@ const getPermissions = require('./mysql/getPermissions');
  *                     More info: https://expressjs.com/en/api.html#res
  */
 exports.login = async (req, res) => {
-  debugger
   // Get env variables
   getEnv();
 
   // Set CORS headers for preflight requests
-  res.set('Access-Control-Allow-Origin', 'http://0.0.0.0:4000');
+  res.set('Access-Control-Allow-Origin', process.env.ACCESS_CONTROL_ALLOW_ORIGIN);
   res.set('Access-Control-Allow-Credentials', 'true');
 
   if (req.method === 'OPTIONS') {
