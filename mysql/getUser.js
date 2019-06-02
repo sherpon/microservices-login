@@ -9,7 +9,7 @@ const getUser = (connection, uid) => {
   return new Promise((resolve, reject) => {
     const query = `
     SELECT * FROM Users
-    WHERE id LIKE '${uid}'
+    WHERE id = '${uid}'
     `;
     connection.query(query, (error, results, fields) => {
       if (error) {

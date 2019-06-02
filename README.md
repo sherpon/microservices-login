@@ -69,17 +69,17 @@ Create a file ``/env/.env.staging.yaml`` and replace the values with your stagin
 ```yaml
 SHERPON_ENV: STAGING
 MICROSERVICES_ENDPOINT: https://us-central1-sherpon-staging.cloudfunctions.net/
-ACCESS_CONTROL_ALLOW_ORIGIN: https://staging.admin.sherpon.com
-DB_HOST: localhost
-DB_PORT: 8889
-DB_USER: root
-DB_PASSWORD: root
+ACCESS_CONTROL_ALLOW_ORIGIN: {https://my-admin-domain.com}
+INSTANCE_CONNECTION_NAME: /cloudsql/{YOUR INSTANCE CONNECTION NAME}
+MYSQL_USER: root
+MYSQL_PASSWORD: root
 MYSQL_DATABASE: sherpon
 ```
 
 ```
 gcloud functions deploy login \
-  --env-vars-file ./env/.env.yaml \
+  --env-vars-file ./env/.env.staging.yaml \
+  --runtime nodejs8 \
   --trigger-http
 ```
 
@@ -93,17 +93,16 @@ Create a file ``/env/.env.production.yaml`` and replace the values with your pro
 ```yaml
 SHERPON_ENV: PRODUCTION
 MICROSERVICES_ENDPOINT: https://us-central1-sherpon-production.cloudfunctions.net/
-ACCESS_CONTROL_ALLOW_ORIGIN: https://admin.sherpon.com
-DB_HOST: localhost
-DB_PORT: 8889
-DB_USER: root
-DB_PASSWORD: root
+ACCESS_CONTROL_ALLOW_ORIGIN: {https://my-admin-domain.com}
+INSTANCE_CONNECTION_NAME: /cloudsql/{YOUR INSTANCE CONNECTION NAME}
+MYSQL_USER: root
+MYSQL_PASSWORD: root
 MYSQL_DATABASE: sherpon
 ```
 
 ```
 gcloud functions deploy login \
-  --env-vars-file ./env/.production.yaml \
+  --env-vars-file ./env/.env.production.yaml \
   --runtime nodejs8 \
   --trigger-http
 ```
@@ -116,10 +115,12 @@ functions deploy login \
   --timeout=50000
 ```
 
+If you want to inspect it, place the debugger on any line and execute the line below:
 ```
 functions inspect login
 ```
 
+For more information:
 ```
 functions logs read
 ```
