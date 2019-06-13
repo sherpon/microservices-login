@@ -2,27 +2,28 @@
 require('./tools/getEnv')();
 
 const getToken = require('./tools/getToken');
-const getUserByToken = require('./tools/getUserByToken');
-const getConnection = require('./mysql/getConnection');
-const getUser = require('./mysql/getUser');
-const saveUser = require('./mysql/saveUser');
-const getPermissions = require('./mysql/getPermissions');
+const getFirebase = require('./firebase/getFirebase');
+const getUserByToken = require('./firebase/getUserByToken');
+const getFirestore = require('./db/getFirestore');
+const getUser = require('./db/getUser');
+const saveUser = require('./db/saveUser');
+const getPermissions = require('./db/getPermissions');
+
+let firebase;
+let firestore;
 
 const getUserStep = async (req, res) => {
   try {
     const user = req.body;
-    const connection = getConnection();
-    connection.connect();
-    const dbUser = await getUser(connection, user.id);
+    firestore = getFirestore(firestore);
+    const dbUser = await getUser(firestore, user.id);
     if (dbUser === false /** user doesn't exist */) {
-      await saveUser(connection, user.id, user.name, user.email, user.phone);
-      connection.end();
+      await saveUser(firestore, user.id, user.name, user.email, user.phone);
       res.status(201);
       res.end();  // return 201 Created
     } else {
       /** user exist */
-      const permissions = await getPermissions(connection, user.id);
-      connection.end();
+      const permissions = await getPermissions(firestore, user.id);
       const session = {
         id: dbUser.id,
         name: dbUser.name,
@@ -45,7 +46,8 @@ const getAuthorizationStep = async (req, res) => {
     // get user information
     const user = req.body;
     const myToken = req.userToken;
-    const uid = await getUserByToken(myToken);
+    firebase = getFirebase(firebase);
+    const uid = await getUserByToken(firebase, myToken);
     if (user.id!==uid) {
       // must be the same
       res.status(401);

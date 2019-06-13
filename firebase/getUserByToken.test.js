@@ -1,4 +1,4 @@
-const getEnv = require('./getEnv');
+const getEnv = require('../tools/getEnv');
 
 jest.mock('firebase-admin');
 
