@@ -42,5 +42,6 @@ firebaseAdmin.credential = {
   cert: () => {}
 };
 firebaseAdmin.auth = () => auth;
+firebaseAdmin.apps = [1];
 
 module.exports = firebaseAdmin;
