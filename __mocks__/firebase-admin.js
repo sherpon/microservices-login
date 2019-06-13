@@ -41,7 +41,9 @@ firebaseAdmin.initializeApp = (credentianObject) => {};
 firebaseAdmin.credential = {
   cert: () => {}
 };
+firebaseAdmin.apps = {
+  length: 1
+};
 firebaseAdmin.auth = () => auth;
-firebaseAdmin.apps = [1];
 
 module.exports = firebaseAdmin;

@@ -16,32 +16,36 @@ describe('Test getUserbyToken', () => {
   });
 
   test('It should get the user.', async () => {
-    
+    const firebase = require('firebase-admin');
     expect.assertions(2);
     expect(process.env.SHERPON_ENV).toBe('DEVELOPMENT');
-    await expect(getUserbyToken(firebaseUser.token)).resolves.toEqual(firebaseUser.uid);
+    await expect(getUserbyToken(firebase, firebaseUser.token)).resolves.toEqual(firebaseUser.uid);
   });
 
   test('It should get the user. Production env', async () => {
+    const firebase = require('firebase-admin');
     delete process.env.SHERPON_ENV;
     expect.assertions(2);
     expect(process.env.SHERPON_ENV).toBe(undefined);
-    await expect(getUserbyToken(firebaseUser.token)).resolves.toEqual(firebaseUser.uid);
+    await expect(getUserbyToken(firebase, firebaseUser.token)).resolves.toEqual(firebaseUser.uid);
   });
 
   test('It shouldn\'t get the user.', async () => {
+    const firebase = require('firebase-admin');
     expect.assertions(1);
-    await expect(getUserbyToken('asdfgsg')).rejects.toThrow('error: the token doesn\'t exist.');
+    await expect(getUserbyToken(firebase, 'asdfgsg')).rejects.toThrow('error: the token doesn\'t exist.');
   });
 
   test('It should return an error because there isn\'t a valid token.', async () => {
+    const firebase = require('firebase-admin');
     expect.assertions(1);
-    await expect(getUserbyToken()).rejects.toThrow('error: token is undefined');
+    await expect(getUserbyToken(firebase, undefined)).rejects.toThrow('error: token is undefined');
   });
 
   test('It should return an error because there isn\'t a empty token.', async () => {
+    const firebase = require('firebase-admin');
     expect.assertions(1);
-    await expect(getUserbyToken('')).rejects.toThrow('error: token is empty');
+    await expect(getUserbyToken(firebase, '')).rejects.toThrow('error: token is empty');
   });
 
 });
