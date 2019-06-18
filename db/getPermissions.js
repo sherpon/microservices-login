@@ -12,7 +12,7 @@ const getPermissions = (firestore, userId) => {
       let permissions = [];
       snapshot.forEach(doc => {
         // console.log(doc.id, '=>', doc.data());
-        permissions.push({...doc.data(), id: doc.id});
+        permissions.push({...doc.data(), id: doc.id, createdAt: doc.data().createdAt._seconds*1000});
       });
       resolve(permissions);
     })
