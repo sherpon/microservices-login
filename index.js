@@ -29,6 +29,7 @@ const getUserStep = async (req, res) => {
         name: dbUser.name,
         email: dbUser.email,
         phone: dbUser.phone,
+        paymentProcessor: dbUser.paymentProcessor,
         websites: permissions
       };
       res.status(202);

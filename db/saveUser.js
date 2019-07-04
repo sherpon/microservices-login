@@ -6,6 +6,7 @@ const saveUser = (firestore, id, name, email, phone) => {
     name,
     email,
     phone,
+    paymentProcessor: {},
     createdAt: timestamp,
   });
 };
