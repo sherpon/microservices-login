@@ -1,3 +1,5 @@
+process.env.SHERPON_ENV = 'test';
+
 const microservice = require('./index');
 
 jest.mock('firebase-admin');
