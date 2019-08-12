@@ -18,7 +18,7 @@ describe('Test getUserbyToken', () => {
   test('It should get the user.', async () => {
     const firebase = require('firebase-admin');
     expect.assertions(2);
-    expect(process.env.SHERPON_ENV).toBe('DEVELOPMENT');
+    expect(process.env.SHERPON_ENV).toBe('test');
     await expect(getUserbyToken(firebase, firebaseUser.token)).resolves.toEqual(firebaseUser.uid);
   });
 
